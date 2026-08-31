@@ -52,12 +52,12 @@
     "@types/node": "^26.4.0",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.5",
-    "@vitejs/plugin-react": "5.2.0",
+    "@vitejs/plugin-react": "6.1.1",
     "electron": "^44.0.0",
     "electron-builder": "^26.15.3",
     "electron-vite": "^5.0.0",
-    "typescript": "6.0.3",
-    "vite": "7.3.6",
+    "typescript": "7.0.2",
+    "vite": "8.2.2",
     "vitest": "^4.1.11"
   },
   "build": {
