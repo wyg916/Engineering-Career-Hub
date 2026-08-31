@@ -1,9 +1,20 @@
+import { realpathSync } from 'node:fs'
 import type { FSWatcher } from 'chokidar'
 import { scanKnowledgeRoot } from '../core/knowledge'
 import type { KnowledgeSnapshot, RootResolution } from '../shared/types'
 
 const WATCH_DEBOUNCE_MS = 800
 const IGNORED_DIRECTORIES = /(^|[\\/])(90_模板|99_系统)([\\/]|$)/
+
+function canonicalWatchRoot(root: string): string {
+  try {
+    // Windows can expose the temp directory through an 8.3 alias while file
+    // notifications return its long name. libuv requires both forms to match.
+    return realpathSync.native(root)
+  } catch {
+    return root
+  }
+}
 
 function unavailableSnapshot(resolution: RootResolution, previous?: KnowledgeSnapshot): KnowledgeSnapshot {
   const diagnostic = { relativePath: '', severity: 'error' as const, message: resolution.message }
@@ -105,7 +116,7 @@ export class KnowledgeService {
     await this.stopWatcher()
     this.watchedRoot = root
     const { default: chokidar } = await import('chokidar')
-    const watcher = chokidar.watch(root, {
+    const watcher = chokidar.watch(canonicalWatchRoot(root), {
       ignored: IGNORED_DIRECTORIES,
       ignoreInitial: true,
       persistent: true,
