@@ -1,0 +1,9 @@
+{
+  "extends": "@electron-toolkit/tsconfig/tsconfig.node.json",
+  "include": ["tests/e2e/**/*.ts", "playwright.config.ts"],
+  "compilerOptions": {
+    "types": ["node", "@playwright/test"],
+    "baseUrl": ".",
+    "ignoreDeprecations": "6.0"
+  }
+}

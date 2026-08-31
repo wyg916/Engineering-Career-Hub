@@ -1,0 +1,95 @@
+{
+  "name": "engineering-experience-study-center",
+  "version": "1.0.0",
+  "description": "Offline Windows desktop learning center for personal engineering experience and interview preparation.",
+  "main": "./out/main/index.js",
+  "author": "wyg916",
+  "license": "MIT",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wyg916/Engineering-Career-Hub.git"
+  },
+  "bugs": {
+    "url": "https://github.com/wyg916/Engineering-Career-Hub/issues"
+  },
+  "homepage": "https://github.com/wyg916/Engineering-Career-Hub#readme",
+  "keywords": [
+    "electron",
+    "offline-first",
+    "spaced-repetition",
+    "interview-preparation",
+    "knowledge-base"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "packageManager": "pnpm@11.19.0",
+  "scripts": {
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "typecheck": "tsc --noEmit -p tsconfig.node.json && tsc --noEmit -p tsconfig.web.json && tsc --noEmit -p tsconfig.e2e.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "npm run build && playwright test",
+    "package:win": "npm run build && electron-builder --win nsis --x64"
+  },
+  "dependencies": {
+    "chokidar": "^5.0.0",
+    "gray-matter": "^4.0.3",
+    "lucide-react": "^1.35.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "react-markdown": "^10.1.0",
+    "rehype-sanitize": "^6.0.0",
+    "remark-gfm": "^4.0.1",
+    "yaml": "^2.9.0",
+    "zustand": "^5.0.15"
+  },
+  "devDependencies": {
+    "@electron-toolkit/tsconfig": "^2.0.0",
+    "@playwright/test": "^1.62.1",
+    "@types/node": "^26.4.0",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.5",
+    "@vitejs/plugin-react": "5.2.0",
+    "electron": "^44.0.0",
+    "electron-builder": "^26.15.3",
+    "electron-vite": "^5.0.0",
+    "typescript": "6.0.3",
+    "vite": "7.3.6",
+    "vitest": "^4.1.11"
+  },
+  "build": {
+    "appId": "com.wyg.engineeringexperiencestudy",
+    "productName": "工程经验求职学习中心",
+    "asar": true,
+    "directories": {
+      "output": "release",
+      "buildResources": "build"
+    },
+    "files": [
+      "out/**/*",
+      "package.json"
+    ],
+    "win": {
+      "icon": "build/icon.ico",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        }
+      ],
+      "artifactName": "Engineering-Experience-Study-Center-${version}-Setup.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "工程经验求职学习中心",
+      "include": "build/installer.nsh"
+    }
+  }
+}
